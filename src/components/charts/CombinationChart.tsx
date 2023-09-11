@@ -8,6 +8,7 @@ import useMeasure from 'react-use-measure';
 import { MOCK_DATA } from '../../data/mock_data';
 import { TooltipWithBounds, defaultStyles, useTooltip } from '@visx/tooltip';
 import { localPoint } from '@visx/event';
+import { timeFormat } from 'd3-time-format';
 
 interface MappedDatas {
 date: string; 
@@ -89,7 +90,7 @@ const CombinationChart = () => {
                 })}
             </Group>
             <Group>
-                <AxisBottom top={innerHeight} scale={xScale}/>
+                <AxisBottom top={innerHeight} scale={xScale} tickFormat={date=>timeFormat("%H:%M:%S")(new Date(date))}/>
             </Group>
             <Group>
                 <AxisLeft left={margin} scale={yScale}/>
