@@ -97,6 +97,7 @@ const CombinationChart = () => {
             </Group>
         </svg>
         {tooltipData ? (
+            <>
         <TooltipWithBounds
             key={Math.random()}
             top={tooltipTop}
@@ -105,6 +106,15 @@ const CombinationChart = () => {
         >
             <b>value_bar</b>: {getYValue(tooltipData)}
         </TooltipWithBounds>
+        <TooltipWithBounds
+            key={Math.random()}
+            top={innerHeight}
+            left={tooltipLeft}
+            style={tooltipStyles}
+        >
+            {getXValue(tooltipData)}
+        </TooltipWithBounds>
+        </>
         ):null}
         </>
     )
