@@ -10,7 +10,7 @@ interface Props {
 const CategoryBtnList:FC<Props> = ({selectCategory,selected}) => {
     return(
         <ButtonSection>
-         {CATEGORYS.map((CATEGORY)=><StyledButton className={CATEGORY === selected?'seleted':''} onClick={selectCategory}>{CATEGORY}</StyledButton>)}
+         {CATEGORYS.map((CATEGORY, index)=><StyledButton key={index} className={CATEGORY === selected?'seleted':''} onClick={selectCategory}>{CATEGORY}</StyledButton>)}
          </ButtonSection>
     )
 }
