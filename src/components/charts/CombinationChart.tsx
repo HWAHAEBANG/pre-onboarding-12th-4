@@ -46,25 +46,16 @@ const CombinationChart = () => {
         padding: 0.1,
     });
 
-    const yScaleBar = scaleLinear<number>({
+  const yScaleBar = scaleLinear<number>({
         range: [innerHeight, margin],
-        domain: [
-            // Math.min(...mappedDatas.map(getYValueBar))-1,
-            // Math.max(...mappedDatas.map(getYValueBar))+1,
-            0,
-            20000,
-        ],
+        domain: [0,20000],
     });
     
         const yScaleArea = scaleLinear<number>({
         range: [innerHeight, margin],
-        domain: [
-            // Math.min(...mappedDatas.map(getYValueArea))-1,
-            // Math.max(...mappedDatas.map(getYValueArea))*2,
-            0,
-200
-        ]
+        domain: [0,200],
     })
+
 
     return (
         <>
@@ -117,13 +108,13 @@ const CombinationChart = () => {
         </Group>
 
             <Group>
-                <AxisBottom top={innerHeight} scale={xScale} tickFormat={date=>timeFormat("%H:%M:%S")(new Date(date))}/>
+                <AxisBottom top={innerHeight} scale={xScale} tickFormat={date=>timeFormat("%H:%M:%S")(new Date(date))} numTicks={15} />
             </Group>
             <Group>
-                <AxisLeft left={margin} scale={yScaleArea}/>
+                <AxisLeft left={margin} scale={yScaleArea} numTicks={4}/>
             </Group>
             <Group>
-                <AxisRight left={innerWidth} scale={yScaleBar}/>
+                <AxisRight left={innerWidth} scale={yScaleBar} numTicks={4}/>
             </Group>
         </svg>
         {tooltipData ? (
