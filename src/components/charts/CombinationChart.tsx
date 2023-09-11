@@ -111,10 +111,10 @@ const CombinationChart = () => {
                 <AxisBottom top={innerHeight} scale={xScale} tickFormat={date=>timeFormat("%H:%M:%S")(new Date(date))} numTicks={15} />
             </Group>
             <Group>
-                <AxisLeft left={margin} scale={yScaleArea} numTicks={4}/>
+                <AxisLeft left={margin} scale={yScaleArea} numTicks={4}  label='area'  labelOffset={50}/>
             </Group>
             <Group>
-                <AxisRight left={innerWidth} scale={yScaleBar} numTicks={4}/>
+                <AxisRight left={innerWidth} scale={yScaleBar} numTicks={4} label='bar' labelOffset={50}/>
             </Group>
         </svg>
         {tooltipData ? (
