@@ -1,7 +1,7 @@
-import { AxisBottom, AxisLeft, AxisTop } from '@visx/axis';
+import { AxisBottom, AxisLeft, AxisRight } from '@visx/axis';
 import { Group } from '@visx/group';
 import { scaleBand, scaleLinear } from '@visx/scale';
-import { Bar } from '@visx/shape';
+import { Bar,AreaClosed,Line,LinePath } from '@visx/shape';
 import React, { MouseEvent, TouchEvent } from 'react'
 import useMeasure from 'react-use-measure';
 
@@ -9,6 +9,7 @@ import { MOCK_DATA } from '../../data/mock_data';
 import { TooltipWithBounds, defaultStyles, useTooltip } from '@visx/tooltip';
 import { localPoint } from '@visx/event';
 import { timeFormat } from 'd3-time-format';
+import { curveMonotoneX } from '@visx/curve';
 
 interface MappedDatas {
 date: string; 
@@ -17,11 +18,12 @@ value_area: number;
 value_bar:number;
 }
 
- const margin = 32;
+ const margin = 100;
  const defaultWidth = 100;
  const defaultHeight = 50;
  const getXValue = (d: MappedDatas) => d.date
- const getYValue = (d: MappedDatas) => d.value_bar
+ const getYValueBar = (d: MappedDatas) => d.value_bar
+ const getYValueArea = (d: MappedDatas) => d.value_area
  const tooltipStyles = {...defaultStyles, borderRadius: 4, background: 'black', color: 'white',fontFamily: 'source-code-pro, Menlo, Monaco, Consolas'}
  
 const CombinationChart = () => {
@@ -41,17 +43,28 @@ const CombinationChart = () => {
     const xScale = scaleBand<string>({
         range: [margin, innerWidth],
         domain: mappedDatas.map(getXValue),
-        padding: 0.2,
+        padding: 0.1,
     });
 
-    const yScale = scaleLinear<number>({
+    const yScaleBar = scaleLinear<number>({
         range: [innerHeight, margin],
         domain: [
-            Math.min(...mappedDatas.map(getYValue))-1,
-            Math.max(...mappedDatas.map(getYValue))+1,
+            // Math.min(...mappedDatas.map(getYValueBar))-1,
+            // Math.max(...mappedDatas.map(getYValueBar))+1,
+            0,
+            20000,
+        ],
+    });
+    
+        const yScaleArea = scaleLinear<number>({
+        range: [innerHeight, margin],
+        domain: [
+            // Math.min(...mappedDatas.map(getYValueArea))-1,
+            // Math.max(...mappedDatas.map(getYValueArea))*2,
+            0,
+200
         ]
     })
-
 
     return (
         <>
@@ -60,7 +73,7 @@ const CombinationChart = () => {
                 {mappedDatas.map((d) => {
                     const xValue = getXValue(d);
                     const barWidth = xScale.bandwidth();
-                    const barHeight = innerHeight - (yScale(getYValue(d) ?? 0))
+                    const barHeight = innerHeight - (yScaleBar(getYValueBar(d) ?? 0))
 
                     const barX = xScale(xValue);
                     const barY = innerHeight - barHeight;
@@ -72,7 +85,7 @@ const CombinationChart = () => {
                         y={barY}
                         width={barWidth}
                         height={barHeight}
-                        fill="orange"
+                        fill="#9EA1FF"
                         onMouseMove={(event:TouchEvent<SVGRectElement> | MouseEvent<SVGRectElement>)=>{
                             const point = localPoint(event);
                             if(!point) return;
@@ -89,11 +102,28 @@ const CombinationChart = () => {
                     )
                 })}
             </Group>
+                   <Group>
+          <AreaClosed<MappedDatas>
+            data={mappedDatas}
+            x={(d) => xScale(getXValue(d)) ?? 0}
+            y={(d) => yScaleArea(getYValueArea(d)) ?? 0}
+            // stroke="#23DBBD"
+            opacity='0.9'
+            fill='#f57b7f'
+            strokeWidth={2}
+            curve={curveMonotoneX}
+            yScale={yScaleArea}
+          />
+        </Group>
+
             <Group>
                 <AxisBottom top={innerHeight} scale={xScale} tickFormat={date=>timeFormat("%H:%M:%S")(new Date(date))}/>
             </Group>
             <Group>
-                <AxisLeft left={margin} scale={yScale}/>
+                <AxisLeft left={margin} scale={yScaleArea}/>
+            </Group>
+            <Group>
+                <AxisRight left={innerWidth} scale={yScaleBar}/>
             </Group>
         </svg>
         {tooltipData ? (
@@ -104,7 +134,7 @@ const CombinationChart = () => {
             left={tooltipLeft}
             style={tooltipStyles}
         >
-            <b>value_bar</b>: {getYValue(tooltipData)}
+            <b>value_bar</b>: {getYValueBar(tooltipData)}
         </TooltipWithBounds>
         <TooltipWithBounds
             key={Math.random()}
