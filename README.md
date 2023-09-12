@@ -37,7 +37,8 @@
 
 
 ### 👀 미리보기 
-![Alt text](image.png)
+![image](https://github.com/HWAHAEBANG/pre-onboarding-12th-4/assets/101491870/50de5f9e-8b03-4359-8da6-f5105c01eb3b)
+
 
 
 ### ▶️ 실행 방법
@@ -139,8 +140,12 @@ npm start
 따라서 이를 해결하기 위해 `화면을 가득 채우는 Bar 차트를 만들어 가장 앞 레이어 두고(z-index를 가장 높게), 이를 투명하게 만들어서 차트가 없는 영역을 hover하더라도 데이터들을 보여줄 수 있도록 구현`하였습니다.(`visx 공식문서에서 권고한 방안`)
 
 ####  🔍 가장 앞 단 레이어에 투명한 상태로 존재하는 Bar차트의 형태
+![image](https://github.com/HWAHAEBANG/pre-onboarding-12th-4/assets/101491870/b3209905-0f3e-4124-9dc5-be564d806e4d)
+
 
 ####  🔍 결과적으로 보여지는 모습
+![image](https://github.com/HWAHAEBANG/pre-onboarding-12th-4/assets/101491870/0e9c2517-7a23-430d-9cc5-58ea31eb7b46)
+
 
 <br/>
 
@@ -187,7 +192,9 @@ Bar 차트는 한 칸당 bandWith 라는 너비를 가지는 반면, Area 차트
 
 | 수정 전 | 수정 후                                    |
 | ------------------------ | ------------------------ |
-| ![Alt text](image-2.png) | ![Alt text](image-1.png)                            |
+| ![image](https://github.com/HWAHAEBANG/pre-onboarding-12th-4/assets/101491870/3fb2474e-3fe8-4279-90c7-89d1145079a9)
+ | ![image](https://github.com/HWAHAEBANG/pre-onboarding-12th-4/assets/101491870/d7e01eeb-c1a1-445e-9a93-5f38984b6e6a)
+)                            |
 
 <br/>
 
@@ -246,6 +253,8 @@ Bar 차트는 한 칸당 bandWith 라는 너비를 가지는 반면, Area 차트
     "prettier": "^3.0.3"
   }
 ```
+
+<br/>
 
 ## 🫱🏻‍🫲🏿 Commit Convention
 
