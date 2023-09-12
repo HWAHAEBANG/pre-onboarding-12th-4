@@ -12,6 +12,7 @@ import { timeFormat } from "d3-time-format";
 import Legend from "./Legend";
 import { MappedDatas } from "../../types/mappedDatas";
 import { MOCK_DATA } from "../../data/mock_data";
+import { AREA_CHARTS, BAR_CHARTS } from "../../constants/chartConstArray";
 
 const mappedDatas = Object.entries(MOCK_DATA.response).map((item) => ({
   date: item[0],
@@ -85,7 +86,7 @@ const CombinationChart: FC<Props> = ({ setSelected, selected }) => {
                 y={barY}
                 width={barWidth}
                 height={barHeight}
-                fill={d.id === selected ? "#5741C0" : "#9EA1FF"}
+                fill={d.id === selected ? "#5741C0" : BAR_CHARTS.color}
               />
             );
           })}
@@ -93,10 +94,11 @@ const CombinationChart: FC<Props> = ({ setSelected, selected }) => {
         <Group>
           <AreaClosed<MappedDatas>
             data={mappedDatas}
-            x={(d) => xScale(getXValue(d)) ?? 0}
+            x={(d) => xScale.bandwidth() / 2 + Number(xScale(getXValue(d))) ?? 0}
+            // x={(d) => xScale(getXValue(d)) ?? 0}
             y={(d) => yScaleArea(getYValueArea(d)) ?? 0}
             opacity="0.9"
-            fill="#f57b7f"
+            fill={AREA_CHARTS.color}
             curve={curveMonotoneX}
             yScale={yScaleArea}
             // width={xScale.bandwidth()}
@@ -182,7 +184,7 @@ const CombinationChart: FC<Props> = ({ setSelected, selected }) => {
         )}
       </svg>
       {tooltipData ? (
-        <>
+        <div style={{textAlign:'center'}}>
           <TooltipWithBounds
             key={Math.random()}
             top={tooltipTop}
@@ -190,10 +192,12 @@ const CombinationChart: FC<Props> = ({ setSelected, selected }) => {
             style={tooltipStyles}
           >
             <b>id</b>: {tooltipData.id}
-            <br />
-            <b>value_area</b>: {getYValueArea(tooltipData)}
-            <br />
-            <b>value_bar</b>: {getYValueBar(tooltipData)}
+            <div style={{display: 'flex', alignItems: 'center'}}>
+            <div style={{background: AREA_CHARTS.color, width:'10px', height:'10px', margin: '0 5px'}}/><b>{AREA_CHARTS.kind}</b>: {getYValueArea(tooltipData)}
+            </div>
+             <div style={{display: 'flex', alignItems: 'center'}}>
+            <div style={{background: BAR_CHARTS.color, width:'10px', height:'10px', margin: '0 5px'}}/><b>{BAR_CHARTS.kind}</b>: {getYValueBar(tooltipData)}
+            </div>
           </TooltipWithBounds>
           <TooltipWithBounds
             key={Math.random()}
@@ -203,7 +207,7 @@ const CombinationChart: FC<Props> = ({ setSelected, selected }) => {
           >
             {getXValue(tooltipData)}
           </TooltipWithBounds>
-        </>
+        </div>
       ) : null}
       <Legend />
     </>

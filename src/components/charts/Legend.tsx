@@ -1,7 +1,9 @@
 import { scaleOrdinal } from "@visx/scale";
 import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
+import { AREA_CHARTS, BAR_CHARTS } from "../../constants/chartConstArray";
 
 const Legend = () => {
+
   return (
     <LegendOrdinal scale={ordinalColorScale}>
       {(labels) => (
@@ -33,9 +35,10 @@ const Legend = () => {
 
 export default Legend;
 
+
 const legendGlyphSize = 12;
 
 const ordinalColorScale = scaleOrdinal({
-  domain: ["value_bar", "value_area"],
-  range: ["#9EA1FF", "#f57b7f"],
+  domain: [BAR_CHARTS.kind, AREA_CHARTS.kind],
+  range: [BAR_CHARTS.color, AREA_CHARTS.color],
 });
