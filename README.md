@@ -192,9 +192,7 @@ Bar 차트는 한 칸당 bandWith 라는 너비를 가지는 반면, Area 차트
 
 | 수정 전 | 수정 후                                    |
 | ------------------------ | ------------------------ |
-| ![image](https://github.com/HWAHAEBANG/pre-onboarding-12th-4/assets/101491870/3fb2474e-3fe8-4279-90c7-89d1145079a9)
- | ![image](https://github.com/HWAHAEBANG/pre-onboarding-12th-4/assets/101491870/d7e01eeb-c1a1-445e-9a93-5f38984b6e6a)
-)                            |
+| ![image](https://github.com/HWAHAEBANG/pre-onboarding-12th-4/assets/101491870/3fb2474e-3fe8-4279-90c7-89d1145079a9)| ![image](https://github.com/HWAHAEBANG/pre-onboarding-12th-4/assets/101491870/d7e01eeb-c1a1-445e-9a93-5f38984b6e6a)|
 
 <br/>
 
