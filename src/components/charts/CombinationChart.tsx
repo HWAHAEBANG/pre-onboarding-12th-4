@@ -13,6 +13,7 @@ import Legend from "./Legend";
 import { MappedDatas } from "../../types/mappedDatas";
 import { MOCK_DATA } from "../../data/mock_data";
 import { AREA_CHARTS, BAR_CHARTS } from "../../constants/chartConstArray";
+import { styled } from "styled-components";
 
 const mappedDatas = Object.entries(MOCK_DATA.response).map((item) => ({
   date: item[0],
@@ -95,13 +96,11 @@ const CombinationChart: FC<Props> = ({ setSelected, selected }) => {
           <AreaClosed<MappedDatas>
             data={mappedDatas}
             x={(d) => xScale.bandwidth() / 2 + Number(xScale(getXValue(d))) ?? 0}
-            // x={(d) => xScale(getXValue(d)) ?? 0}
             y={(d) => yScaleArea(getYValueArea(d)) ?? 0}
             opacity="0.9"
             fill={AREA_CHARTS.color}
             curve={curveMonotoneX}
             yScale={yScaleArea}
-            // width={xScale.bandwidth()}
           />
         </Group>
 
@@ -109,8 +108,16 @@ const CombinationChart: FC<Props> = ({ setSelected, selected }) => {
           <AxisBottom
             top={innerHeight}
             scale={xScale}
-            tickFormat={(date) => timeFormat("%H:%M:%S")(new Date(date))}
+            tickFormat={(date, index) =>
+              timeFormat("%H:%M:%S")(new Date(date))
+              // 이하 줄바꿈 불가 문제로 임시 보류.
+              //  index === 0
+              // ? timeFormat(`%H:%M:%S %y-%m-%d일자`)(new Date(date))
+              // : timeFormat("%H:%M:%S")(new Date(date))
+              }
             numTicks={15}
+            labelOffset={5}
+            // tickValues={x}
           />
         </Group>
         <Group>
@@ -218,7 +225,7 @@ export default CombinationChart;
 
 //==================================================================
 
-const marginY = 30;
+const marginY = 40;
 const marginX = 100;
 const defaultWidth = 100;
 const defaultHeight = 100;
